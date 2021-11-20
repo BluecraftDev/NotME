@@ -1,0 +1,5 @@
+node_modules/
+.eslintrc.json
+json.sqlite
+data/
+database.db
