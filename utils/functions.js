@@ -14,6 +14,26 @@ const settings = new enmap({
 	fetchAll: true
 });
 
+var chars = require('./chars')
+
+Object.keys(chars).forEach(function(key) {
+	var value = chars[key]
+	if (!chars[value]) {
+		chars[value] = key
+	}
+})
+
+module.exports.flipText = function(str) {
+	var result = ''
+		, c = str.length
+		, ch = ''
+	for (; c >= 0; --c) {
+		ch = str.charAt(c)
+		result += chars[ch] || chars[ch.toLowerCase()] || ch
+	}
+	return result
+}
+
 async function start(client) {
 	if (!client) throw new Error("Client not provided, ticket system will not be working.")
 	client.on("messageReactionAdd", async (reaction, user, message) => {
@@ -32,19 +52,19 @@ async function start(client) {
 			reaction.message.guild.channels
 				.create(`ticket-${user.username}`, {
 					permissionOverwrites: [{
-							id: user.id,
-							allow: ["SEND_MESSAGES", "VIEW_CHANNEL"]
-						},
-						{
-							id: reaction.message.guild.roles.everyone,
-							deny: ["VIEW_CHANNEL"]
-						},
-						{
-							id: reaction.message.guild.roles.cache.find(
-								role => role.name === "Patrol"
-							),
-							allow: ["SEND_MESSAGES", "VIEW_CHANNEL"]
-						}
+						id: user.id,
+						allow: ["SEND_MESSAGES", "VIEW_CHANNEL"]
+					},
+					{
+						id: reaction.message.guild.roles.everyone,
+						deny: ["VIEW_CHANNEL"]
+					},
+					{
+						id: reaction.message.guild.roles.cache.find(
+							role => role.name === "Patrol"
+						),
+						allow: ["SEND_MESSAGES", "VIEW_CHANNEL"]
+					}
 					],
 					type: "text"
 				})
@@ -52,9 +72,9 @@ async function start(client) {
 					channel.send(
 						`<@${user.id}>`,
 						new Discord.MessageEmbed()
-						.setTitle("Welcome to your ticket!")
-						.setDescription("Support Team will be with you shortly!")
-						.setColor(client.config.discord.accentColor)
+							.setTitle("Welcome to your ticket!")
+							.setDescription("Support Team will be with you shortly!")
+							.setColor(client.config.discord.accentColor)
 					);
 				});
 		}
@@ -65,10 +85,10 @@ async function setup(message, channelID) {
 	const channel = message.guild.channels.cache.find(channel => channel.id === channelID);
 	let sent = await channel.send(
 		new Discord.MessageEmbed()
-		.setTitle("Ticket System")
-		.setDescription("React to open a ticket!")
-		.setFooter("Ticket System")
-		.setColor(message.client.config.discord.accentColor)
+			.setTitle("Ticket System")
+			.setDescription("React to open a ticket!")
+			.setFooter("Ticket System")
+			.setColor(message.client.config.discord.accentColor)
 	);
 
 	sent.react("🎫");
@@ -84,8 +104,8 @@ async function close(message, transcript) {
 
 	if (transcript === true) {
 		channel.messages.fetch({
-				limit: 80
-			})
+			limit: 80
+		})
 			.then(function(messages) {
 				let content = messages.map(message => message.content && message.content).join("\n");
 				message.author.send(`Transcript for your ticket in ${message.guild.name} Server`);
@@ -198,13 +218,13 @@ const typesetColor = 'white';
 
 mathjax.start();
 
-module.exports.toTitleCase = function (string) {
-	return string.toString().replace(/\w\S*/g, function (txt) {
+module.exports.toTitleCase = function(string) {
+	return string.toString().replace(/\w\S*/g, function(txt) {
 		return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
 	});
 };
 
-module.exports.formatBytes = function (bytes, decimals = 2) {
+module.exports.formatBytes = function(bytes, decimals = 2) {
 	if (bytes === 0) return '0 B';
 
 	const k = 1024;
@@ -216,7 +236,7 @@ module.exports.formatBytes = function (bytes, decimals = 2) {
 	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };
 
-module.exports.shuffle = function (array) {
+module.exports.shuffle = function(array) {
 	var currentIndex = array.length,
 		randomIndex;
 
@@ -230,12 +250,12 @@ module.exports.shuffle = function (array) {
 	return array;
 };
 
-module.exports.millisToSeconds = function (millis) {
+module.exports.millisToSeconds = function(millis) {
 	var seconds = ((millis % 60000) / 1000).toFixed(0);
 	return seconds;
 };
 
-module.exports.decode = function (encodedString) {
+module.exports.decode = function(encodedString) {
 	var translate_re = /&(nbsp|amp|quot|lt|gt);/g;
 	var translate = {
 		nbsp: ' ',
@@ -247,21 +267,21 @@ module.exports.decode = function (encodedString) {
 		auml: 'ä',
 	};
 	return encodedString
-		.replace(translate_re, function (match, entity) {
+		.replace(translate_re, function(match, entity) {
 			return translate[entity];
 		})
-		.replace(/&#(\d+);/gi, function (match, numStr) {
+		.replace(/&#(\d+);/gi, function(match, numStr) {
 			var num = parseInt(numStr, 10);
 			return String.fromCharCode(num);
 		});
 };
 
-module.exports.choice = function (choices) {
+module.exports.choice = function(choices) {
 	var index = Math.floor(Math.random() * choices.length);
 	return choices[index];
 };
 
-module.exports.superify = function (input) {
+module.exports.superify = function(input) {
 	if (!input) return input;
 	var output = [];
 	var alphanumeric = /^[a-z0-9]+$/i;
@@ -296,12 +316,12 @@ module.exports.superify = function (input) {
 	return output.join('');
 };
 
-module.exports.clean = function (text) {
+module.exports.clean = function(text) {
 	if (typeof text === 'string') return text.replace(/\`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203));
 	else return text;
 };
 
-module.exports.parseQuotes = function (str = '') {
+module.exports.parseQuotes = function(str = '') {
 	let current = '',
 		arr = [],
 		inQuotes = false;
@@ -322,7 +342,7 @@ module.exports.parseQuotes = function (str = '') {
 	return arr;
 };
 
-module.exports.numberWithCommas = function (int) {
+module.exports.numberWithCommas = function(int) {
 	return parseInt(int)
 		.toString()
 		.replace(/\B(?=(\d{3})+(?!\d))/g, ',');

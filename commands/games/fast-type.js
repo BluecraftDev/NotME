@@ -80,10 +80,10 @@ module.exports = class Command extends Commando.Command {
 			},
 			sentence: sentence(),
 			winMessage: 'You made it in **{{time}}**.\nYou have a WPM (Words per Minute) of **{{wpm}}**.',
-			loseMessage: this.client.language('Better luck next time!', message),
-			cancelMessage: this.client.language('You ended the game!', message),
+			loseMessage: await this.client.language('Better luck next time!', message),
+			cancelMessage: await this.client.language('You ended the game!', message),
 			time: 120000,
-			buttonText: this.client.language('Cancel', message),
+			buttonText: await this.client.language('Cancel', message),
 			othersMessage: 'Only <@{{author}}> can use the buttons!',
 		});
 	}

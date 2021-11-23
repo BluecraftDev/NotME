@@ -3,17 +3,16 @@ const Commando = require('discord.js-commando');
 module.exports = class Command extends Commando.Command {
 	constructor(client) {
 		super(client, {
-			name: 'reverse',
-			aliases: ['invert'],
+			name: 'flip',
 			group: 'util',
-			memberName: 'reverse',
+			memberName: 'flip',
 			ownerOnly: false,
 			guildOnly: false,
-			description: 'Reverse a given string.',
+			description: 'Flips a given string.',
 			args: [
 				{
 					key: 'text',
-					prompt: 'What word do you want to reverse?',
+					prompt: 'What word do you want to flip?',
 					type: 'string',
 				},
 			],
@@ -21,6 +20,6 @@ module.exports = class Command extends Commando.Command {
 	}
 
 	async run(message, { text }) {
-		message.inlineReply(text.split('').reverse().join(''));
+		message.inlineReply(this.client.functions.flipText(text));
 	}
 };

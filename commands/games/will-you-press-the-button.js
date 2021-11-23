@@ -5,7 +5,7 @@ module.exports = class Command extends Commando.Command {
 	constructor(client) {
 		super(client, {
 			name: 'will-you-press-the-button',
-			aliases: ['wyptb', 'button-press'],
+			aliases: ['wyptb', 'button-press', 'yes-or-no'],
 			group: 'games',
 			memberName: 'will-you-press-the-button',
 			ownerOnly: false,
@@ -19,7 +19,7 @@ module.exports = class Command extends Commando.Command {
 			message: message,
 			embed: {
 				title: (await this.client.language('Will you press the button?', message)),
-				description: `\`\`\`{{statement1}}\`\`\`\n**${this.client.language('BUT', message)}**\n\n\`\`\`{{statement2}}\`\`\``,
+				description: `\`\`\`{{statement1}}\`\`\`\n**${await this.client.language('BUT', message)}**\n\n\`\`\`{{statement2}}\`\`\``,
 				color: this.client.config.discord.accentColor,
 				footer: 'just a game',
 				timestamp: true,

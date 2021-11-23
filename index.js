@@ -70,6 +70,7 @@ Array.prototype.unique = function () {
 	return a;
 };
 
+client.functions = functions;
 client.currency = currency;
 
 require('@weky/inlinereply');
@@ -435,7 +436,7 @@ client.on('message', async (message) => {
 		const curLevel = Math.floor(0.1 * Math.sqrt(client.points.get(key, 'points')));
 
 		if (client.points.get(key, 'level') < curLevel) {
-			message.lineReplyNoMention((await client.language(`You've leveled up to level **${curLevel}**! Ain't that dandy?`, message))).then(m => m.delete({ timeout: 5000 }));
+			message.lineReplyNoMention((await client.language(`You've leveled up to level **${curLevel}**!`, message))).then(m => m.delete({ timeout: 5000 }));
 			client.points.set(key, curLevel, 'level');
 		}
 	}

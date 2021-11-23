@@ -36,6 +36,7 @@
     "comma-number": "^2.1.0",
     "discord-buttons": "^4.0.0",
     "discord-giveaways": "^5.0.0",
+    "discord-paginationembed": "^2.1.0",
     "discord-prefix": "^2.0.0",
     "discord-reply": "^0.1.2",
     "discord-tictactoe": "^2.1.1",

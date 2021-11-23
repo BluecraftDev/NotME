@@ -69,7 +69,7 @@ module.exports = class HelpCommand extends Commando.Command {
 				.setColor(this.client.config.discord.accentColor)
 				.setDescription(`
 					[Invite ${this.client.user.username}](https://dsc.gg/notmebot) - [Support Server](https://discord.gg/9pFVkFXeuN)\n
-					To run a command in **${message.guild ? message.guild.name : 'any servers'}**, use ${Commando.Command.usage('command', message.guild ? message.guild.commandPrefix : null, this.client.user)}. For example, ${Commando.Command.usage('prefix', message.guild ? message.guild.commandPrefix : null, this.client.user)}.
+					To run a command in **${message.guild ? message.guild.name : 'any server'}**, use ${Commando.Command.usage('command', message.guild ? message.guild.commandPrefix : null, this.client.user)}. For example, ${Commando.Command.usage('prefix', message.guild ? message.guild.commandPrefix : null, this.client.user)}.
 					`)
 				.setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
 				.setTimestamp();

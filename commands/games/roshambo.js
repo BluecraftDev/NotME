@@ -5,7 +5,7 @@ module.exports = class Command extends Commando.Command {
 	constructor(client) {
 		super(client, {
 			name: 'roshambo',
-			aliases: ['rock-paper-scissors'],
+			aliases: ['rock-paper-scissors', 'rps'],
 			group: 'games',
 			memberName: 'roshambo',
 			ownerOnly: false,
@@ -20,7 +20,7 @@ module.exports = class Command extends Commando.Command {
 			message: message,
 			opponent: message.mentions.users.first(),
 			embed: {
-				title: (await this.client.language('Roshambo (Rock Paper Scissors)', message)),
+				title: 'Roshambo (Rock Paper Scissors)',
 				description: 'Press the button below to choose your element.',
 				color: this.client.config.discord.accentColor,
 				footer: 'roshambo les go',

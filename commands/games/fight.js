@@ -19,7 +19,7 @@ module.exports = class Command extends Commando.Command {
 			message: message,
 			opponent: message.mentions.users.first(),
 			embed: {
-				title: (await this.client.language("Fight", message)),
+				title: "Fight",
 				color: this.client.config.discord.accentColor,
 				footer: (await this.client.language('This is just a game.', message)),
 				timestamp: true,

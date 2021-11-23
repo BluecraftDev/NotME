@@ -16,12 +16,17 @@ module.exports = class Command extends Commando.Command {
 					key: 'user',
 					prompt: 'Which user do you want to use with this command?',
 					type: 'member',
+					default: ''
 				},
 			],
 		});
 	}
 
 	async run(message, { user }) {
+		if (!user) {
+			user = message.member;
+		}
+		
 		const image = await canvacord.Canvacord.rip(user.user.displayAvatarURL({ format: 'png' }));
 		const attachment = new Discord.MessageAttachment(image, 'rip.png');
 

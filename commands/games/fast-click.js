@@ -26,7 +26,7 @@ module.exports = class Command extends Commando.Command {
 			waitMessage: (await this.client.language('The buttons may appear anytime now!', message)),
 			startMessage: (await this.client.language('First person to press the correct button will win. You have **{{time}}**!', message)),
 			winMessage: (await this.client.language('<@{{winner}}> pressed the button in **{{time}}**.', message)),
-			loseMessage: this.client.language('No one pressed the button in time. So, I dropped the game!', message),
+			loseMessage: await this.client.language('No one pressed the button in time. So, I dropped the game!', message),
 			emoji: '👆',
 			ongoingMessage: 'A game is already runnning in <#{{channel}}>. You can\'t start a new one!',
 		});
