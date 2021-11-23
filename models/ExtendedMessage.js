@@ -17,7 +17,7 @@ class ExtAPIMessage extends APIMessage {
 }
 
 class Message extends Structures.get("Message") {
-    reply(content, options) {
+    inlinereply(content, options) {
         return this.channel.send(ExtAPIMessage.create(this, content, options, { replyTo: this }).resolveData());
     }
 
