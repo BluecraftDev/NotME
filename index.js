@@ -393,10 +393,7 @@ client
 		console.error(`Error in command ${cmd.groupID}:${cmd.memberName}\n`, err);
 	})
 	.on('commandBlock', (msg, reason) => {
-		console.log(oneLine`
-			Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
-			blocked; ${reason}
-		`);
+		console.log(`Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''} blocked; ${reason}`);
 	});
 
 statcord.on("autopost-start", () => {
