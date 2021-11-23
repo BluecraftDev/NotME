@@ -40,7 +40,7 @@ module.exports = class Command extends Commando.Command {
 				.setTitle(response.results[i].package.name)
 
 			for (const [key, value] of Object.entries(response.results[i].package)) {
-				if (typeof value == 'object' && key !== 'keywords') {
+				if (typeof value == 'object' && typeof Object.keys(value) !== 'number') {
 					const keys = [];
 					for (const [key1, value1] of Object.entries(value)) {
 						keys.push(`${this.client.functions.toTitleCase(key1)}: ${value1}`);
@@ -49,8 +49,9 @@ module.exports = class Command extends Commando.Command {
 				} else {
 					if (isIsoDate(value)) {
 						embed1.addField(this.client.functions.toTitleCase(key), new Date(value), true);
+					} else {
+						embed1.addField(this.client.functions.toTitleCase(key), value, true);
 					}
-					embed1.addField(this.client.functions.toTitleCase(key), value, true);
 				}
 			}
 
