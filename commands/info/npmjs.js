@@ -26,7 +26,8 @@ module.exports = class Command extends Commando.Command {
 					prompt: 'What package do you like to search?',
 					type: 'string'
 				}
-			]
+			],
+			clientPermissions: ['MANAGE_MESSAGES']
 		});
 	}
 
