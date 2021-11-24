@@ -15,25 +15,20 @@ module.exports = class UserInfo extends Commando.Command {
 			ownerOnly: false,
 			guildOnly: false,
 			description: 'Get information about a specific user across Discord (Yes, Discord, not within the server).',
-			format: '[user]'
+			args: [
+				{
+					key: 'user',
+					prompt: 'What user?',
+					type: 'user',
+					default: ''
+				}
+			]
 		});
 	}
 
-	async run(message) {
-		let user;
-
-		if (!args) {
-			user = message.author;
-		} else {
-			user =
-				message.mentions.users.first() ||
-				(await this.client.users.fetch(args).catch((err) => {
-					return message.channel.send(`${this.client.emotes.error} - Unable to find this user!`);
-				}));
-		}
-
+	async run(message, { user }) {
 		if (!user) {
-			return message.channel.send(`${this.client.emotes.error} - This account doesn't exist!`);
+			user = message.author;
 		}
 
 		// let stat = {

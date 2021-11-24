@@ -449,51 +449,53 @@ client.on('message', async (message) => {
 
 		const database = db.get(`${message.guild.id}`);
 
-		if (message.content.includes(startDelim) && message.content.includes(endDelim)) {
-			const texStrings = message.content.split(startDelim);
+		if (!message.content.startsWith(message.guild.commandPrefix)) {
+			if (message.content.includes(startDelim) && message.content.includes(endDelim)) {
+				const texStrings = message.content.split(startDelim);
 
-			if (texStrings.length !== 1) {
-				texStrings.shift();
+				if (texStrings.length !== 1) {
+					texStrings.shift();
 
-				const promises = texStrings.map((elem) => {
-					const end = elem.indexOf(endDelim),
-						tex = elem.slice(0, end);
-					return functions.typeset(tex);
-				});
-
-				return Promise.all(promises)
-					.then((images) => {
-						functions.attachImages(message.channel, images, 'LaTeX:');
-					})
-					.catch((err) => {
-						message.inlineReply(`${message.client.emotes.error} - **LaTeX Error**\n\`\`\`js\n${err}\n\`\`\``);
+					const promises = texStrings.map((elem) => {
+						const end = elem.indexOf(endDelim),
+							tex = elem.slice(0, end);
+						return functions.typeset(tex);
 					});
-			}
-		} else {
-			if (message.content == '' || message.content.includes('hmm')) return;
 
-			let channel;
-
-			if (db.has(`${message.guild.id}.chatbotChannel`) && db.get(`${message.guild.id}.chatbotChannel`) !== '') {
-				channel = message.guild.channels.cache.get(database.chatbotChannel);
-
-				if (channel && message.channel.type !== 'dm') {
-					if (channel.id !== message.channel.id) return;
-
-					axios
-						.get(`http://api.brainshop.ai/get?bid=158578&key=lK4EO8rZt4hVX5Zb&uid=${functions.makeID(15)}&msg=${encodeURIComponent(message.content)}`)
-						.then(async (response) => {
-							await sleep(functions.randint(500, 2500));
-
-							console.log(response.data);
-
-							const { cnt } = response.data;
-
-							message.lineReplyNoMention(cnt);
+					return Promise.all(promises)
+						.then((images) => {
+							functions.attachImages(message.channel, images, 'LaTeX:');
 						})
 						.catch((err) => {
-							console.log(err);
+							message.inlineReply(`${message.client.emotes.error} - **LaTeX Error**\n\`\`\`js\n${err}\n\`\`\``);
 						});
+				}
+			} else {
+				if (message.content == '' || message.content.includes('hmm')) return;
+
+				let channel;
+
+				if (db.has(`${message.guild.id}.chatbotChannel`) && db.get(`${message.guild.id}.chatbotChannel`) !== '') {
+					channel = message.guild.channels.cache.get(database.chatbotChannel);
+
+					if (channel && message.channel.type !== 'dm') {
+						if (channel.id !== message.channel.id) return;
+
+						axios
+							.get(`http://api.brainshop.ai/get?bid=158578&key=lK4EO8rZt4hVX5Zb&uid=${functions.makeID(15)}&msg=${encodeURIComponent(message.content)}`)
+							.then(async (response) => {
+								await sleep(functions.randint(500, 2500));
+
+								console.log(response.data);
+
+								const { cnt } = response.data;
+
+								message.lineReplyNoMention(cnt);
+							})
+							.catch((err) => {
+								console.log(err);
+							});
+					}
 				}
 			}
 		}
