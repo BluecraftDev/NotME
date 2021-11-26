@@ -5,7 +5,7 @@ module.exports = class Amogus extends Commando.Command {
 	constructor(client) {
 		super(client, {
 			name: 'betrayal',
-			aliases: ['amogus', 'amogusripoff'],
+			aliases: ['amogusripoff'],
 			group: 'games',
 			memberName: 'betrayal',
 			ownerOnly: false,

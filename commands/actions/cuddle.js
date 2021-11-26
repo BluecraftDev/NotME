@@ -17,7 +17,7 @@ module.exports = class CuddleCommand extends Commando.Command {
 				{
 					key: 'user',
 					prompt: 'Which user do you want to use with this command?',
-					type: 'member',
+					type: 'user',
 				},
 			],
 		});
@@ -28,18 +28,18 @@ module.exports = class CuddleCommand extends Commando.Command {
 
 		console.log(data);
 
-		if (user.user === message.author) {
+		if (user === message.author) {
 			const embed = new MessageEmbed()
-				.setColor(user.displayHexColor === '#000000' ? '#ffffff' : user.displayHexColor)
+				.setColor('RANDOM')
 				.setImage(data.url)
-				.setAuthor((await this.client.language(`${message.author.username} cuddles themselves!`, message)), user.user.displayAvatarURL({ dynamic: true }));
+				.setAuthor((await this.client.language(`${message.author.username} cuddles themselves!`, message)), user.displayAvatarURL({ dynamic: true }));
 
 			message.channel.send(embed);
 		} else {
 			const embed = new MessageEmbed()
-				.setColor(message.author.displayHexColor === '#000000' ? '#ffffff' : message.author.displayHexColor)
+				.setColor('RANDOM')
 				.setImage(data.url)
-				.setAuthor((await this.client.language(`${message.author.username} cuddles ${user.user.username}! What...`, message)), message.author.displayAvatarURL({ dynamic: true }));
+				.setAuthor((await this.client.language(`${message.author.username} cuddles ${user.username}! What...`, message)), message.author.displayAvatarURL({ dynamic: true }));
 
 			message.channel.send(embed);
 		}

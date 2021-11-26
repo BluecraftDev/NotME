@@ -16,7 +16,7 @@ module.exports = class HugCommand extends Commando.Command {
 				{
 					key: 'user',
 					prompt: 'Which user do you want to use with this command?',
-					type: 'member',
+					type: 'user',
 				},
 			],
 		});
@@ -25,14 +25,14 @@ module.exports = class HugCommand extends Commando.Command {
 	async run(message, { user }) {
 		let data = await neko.sfw.hug();
 
-		if (user.user === message.author) {
-			return message.channel.send(`${this.client.emotes.error} - ${await this.client.language("You can't hug yourself!", message)}`);
+		if (user === message.author) {
+			return message.inlineReply(`${this.client.emotes.error} - ${await this.client.language("You can't hug yourself!", message)}`);
 		}
 
 		const embed = new MessageEmbed()
-			.setColor(user.displayHexColor === '#000000' ? '#ffffff' : user.displayHexColor)
+			.setColor('RANDOM')
 			.setImage(data.url)
-			.setAuthor((await this.client.language(`${message.author.username} hugs ${user.user.username}! Yay...`, message)), user.user.displayAvatarURL({ dynamic: true }));
+			.setAuthor((await this.client.language(`${message.author.username} hugs ${user.username}! Yay...`, message)), user.displayAvatarURL({ dynamic: true }));
 
 		message.channel.send(embed);
 	}

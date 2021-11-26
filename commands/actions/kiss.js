@@ -17,7 +17,7 @@ module.exports = class Command extends Commando.Command {
 				{
 					key: 'user',
 					prompt: 'Which user do you want to use with this command?',
-					type: 'member',
+					type: 'user',
 				},
 			],
 		});
@@ -28,14 +28,14 @@ module.exports = class Command extends Commando.Command {
 
 		console.log(data);
 
-		if (user.user === message.author) {
+		if (user === message.author) {
 			return message.channel.send(`${this.client.emotes.error} - ${await this.client.language("You can't kiss yourself!", message)}`);
 		}
 
 		const embed = new MessageEmbed()
-			.setColor(user.displayHexColor === '#000000' ? '#ffffff' : user.displayHexColor)
+			.setColor('RANDOM')
 			.setImage(data.url)
-			.setAuthor((await this.client.language(`${message.author.username} kisses ${user.user.username}! So sweet...`, message)), user.user.displayAvatarURL({ dynamic: true }));
+			.setAuthor((await this.client.language(`${message.author.username} kisses ${user.username}! So sweet...`, message)), user.displayAvatarURL({ dynamic: true }));
 
 		message.channel.send(embed);
 	}

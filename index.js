@@ -7,7 +7,7 @@ const functions = require('./utils/functions.js');
 const keepAlive = require('./server');
 const { Users } = require('./dbObjects');
 const currency = new Collection();
-const fetch = require("node-fetch")
+const fetch = require("node-fetch");
 
 require('./models/ExtendedMessage');
 
@@ -162,6 +162,7 @@ const { SpotifyPlugin } = require('@distube/spotify');
 const distube = new DisTube.default(client, {
 	searchSongs: 10,
 	leaveOnFinish: true,
+	emitNewSongOnly: true,
 	searchCooldown: 30,
 	emptyCooldown: 30,
 	customFilters: {
